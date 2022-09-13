@@ -26,6 +26,7 @@ public class SplashActivity extends AppCompatActivity {
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
+    private static boolean MANUAL_HIDE = false;
 
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -70,8 +71,10 @@ public class SplashActivity extends AppCompatActivity {
         public void run() {
             hide();
 
-            Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
-            SplashActivity.this.startActivity(pininput);
+            if( !MANUAL_HIDE ) {
+                Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
+                SplashActivity.this.startActivity(pininput);
+            }
         }
     };
     /**
@@ -168,6 +171,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        MANUAL_HIDE = true;
         Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
         SplashActivity.this.startActivity(pininput);
         return super.onTouchEvent(event);
