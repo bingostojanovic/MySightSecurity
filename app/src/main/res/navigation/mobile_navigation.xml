@@ -8,30 +8,30 @@
     <fragment
         android:id="@+id/pin_input"
         android:name="com.justin.mysightsecurity.ui.pin_input.PinInputFragment"
-        android:label="@string/title_home"
+        android:label="@string/pin_input"
         tools:layout="@layout/fragment_pininput" />
 
     <fragment
         android:id="@+id/history"
         android:name="com.justin.mysightsecurity.ui.history.HistoryFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/history"
         tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/add_device"
         android:name="com.justin.mysightsecurity.ui.add_device.AddDeviceFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_adddevice"
         tools:layout="@layout/fragment_adddevice" />
 
     <fragment
         android:id="@+id/pin_setup"
-        android:name="com.justin.mysightsecurity.ui.add_device.AddDeviceFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_adddevice" />
+        android:name="com.justin.mysightsecurity.ui.pinsetup.PinSetupFragment"
+        android:label="@string/title_pinsetup"
+        tools:layout="@layout/fragment_pinsetup" />
 
     <fragment
         android:id="@+id/scan"
-        android:name="com.justin.mysightsecurity.ui.add_device.AddDeviceFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_adddevice" />
+        android:name="com.justin.mysightsecurity.ui.scan.ScanFragment"
+        android:label="@string/title_scan"
+        tools:layout="@layout/fragment_scan" />
 </navigation>
