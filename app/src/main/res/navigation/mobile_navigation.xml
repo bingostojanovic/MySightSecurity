@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/pin_input"
-        android:name="com.justin.mysightsecurity.ui.home.HomeFragment"
+        android:name="com.justin.mysightsecurity.ui.pin_input.PinInputFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_pininput" />
 
     <fragment
         android:id="@+id/history"
-        android:name="com.justin.mysightsecurity.ui.dashboard.DashboardFragment"
+        android:name="com.justin.mysightsecurity.ui.history.HistoryFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/add_device"
-        android:name="com.justin.mysightsecurity.ui.notifications.NotificationsFragment"
+        android:name="com.justin.mysightsecurity.ui.add_device.AddDeviceFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_adddevice" />
 
     <fragment
         android:id="@+id/pin_setup"
-        android:name="com.justin.mysightsecurity.ui.notifications.NotificationsFragment"
+        android:name="com.justin.mysightsecurity.ui.add_device.AddDeviceFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_adddevice" />
 
     <fragment
         android:id="@+id/scan"
-        android:name="com.justin.mysightsecurity.ui.notifications.NotificationsFragment"
+        android:name="com.justin.mysightsecurity.ui.add_device.AddDeviceFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_adddevice" />
 </navigation>
