@@ -4,7 +4,7 @@
     <item
         android:id="@+id/pin_input"
         android:icon="@drawable/lock"
-        android:title=""/>
+        android:title="@string/pin_input"/>
 
     <item
         android:id="@+id/history"
@@ -18,7 +18,7 @@
     <item
         android:id="@+id/pin_setup"
         android:icon="@drawable/setup"
-        android:title=""/>
+        android:title="@string/title_pinsetup"/>
     <item
         android:id="@+id/scan"
         android:icon="@drawable/view"
