@@ -131,7 +131,7 @@
                     android:layout_marginTop="50dp"
                     android:text="Set Password"
                     android:textSize="28dp"
-                    app:backgroundTint="@color/btn_color"
+                    app:backgroundTint="@color/mybtncolor"
                     app:cornerRadius="5dp" />
 
             </LinearLayout>

@@ -10,4 +10,5 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="search">Search</string>
+    <string name="add_now">Add Now</string>
 </resources>
