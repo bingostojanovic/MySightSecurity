@@ -12,6 +12,7 @@ public class PinSetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_setup);
+        getSupportActionBar().hide();
     }
 
     @Override
