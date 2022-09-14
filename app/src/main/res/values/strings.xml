@@ -11,4 +11,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="search">Search</string>
     <string name="add_now">Add Now</string>
+    <string name="add_device">Add New Device</string>
+    <string name="scan">Scan</string>
 </resources>
