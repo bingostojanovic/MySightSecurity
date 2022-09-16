@@ -2,6 +2,7 @@ package com.justin.mysightsecurity.ui.pinsetup;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.justin.mysightsecurity.MainActivity;
+import com.justin.mysightsecurity.PinInputActivity;
+import com.justin.mysightsecurity.PinSetupActivity;
 import com.justin.mysightsecurity.R;
 
 public class PinSetupFragment extends Fragment {
@@ -26,6 +30,7 @@ public class PinSetupFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_pinsetup, container, false);
     }
 
