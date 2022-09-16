@@ -180,6 +180,14 @@ public class PinInputActivity extends Activity {
             PinInputActivity.this.startActivity(pininput);
             return true;
         } else {
+            text4.setText("");
+            text3.setText("");
+            text2.setText("");
+            text1.setText("");
+
+            text1.clearFocus();
+            count = 0;
+            Toast.makeText(this, "Wrong Password!", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

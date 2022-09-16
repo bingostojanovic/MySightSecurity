@@ -65,7 +65,8 @@ public class PinSetupActivity extends AppCompatActivity {
 
 
                 try {
-                    db.insert("User", null, values);
+//                    db.insert("User", null, values);
+                    db.update("User", values, "id=?", new String[]{"0"});
                 }catch (Exception e) {
                     Toast.makeText(PinSetupActivity.this, "DataBase error: "+ e.toString(), Toast.LENGTH_SHORT).show();
                     db.close();

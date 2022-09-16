@@ -1,5 +1,6 @@
 package com.justin.mysightsecurity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 switch(navDestination.getId()){
 
                     case R.id.pin_input:
-                        titleText.setText("Pin Input");
+                        Intent pininput = new Intent(MainActivity.this, PinInputActivity.class);
+                        MainActivity.this.startActivity(pininput);
                         break;
                     case R.id.history:
                         titleText.setText("History");
@@ -65,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
                         titleText.setText("Add New Device");
                         break;
                     case R.id.pin_setup:
-                        titleText.setText("Setup");
+                        Intent intent = new Intent(MainActivity.this, PinSetupActivity.class);
+                        MainActivity.this.startActivity(intent);
                         break;
                     case R.id.scan:
                         titleText.setText("Gallery");
