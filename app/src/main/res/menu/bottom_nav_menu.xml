@@ -3,25 +3,20 @@
 
     <item
         android:id="@+id/pin_input"
-        android:icon="@drawable/lock"
-        android:title="@string/pin_input"/>
+        android:icon="@drawable/lock"/>
 
     <item
         android:id="@+id/history"
-        android:icon="@drawable/history"
-        android:title="@string/history"/>
+        android:icon="@drawable/history"/>
 
     <item
         android:id="@+id/add_device"
-        android:icon="@drawable/add_device"
-        android:title="@string/add_device"/>
+        android:icon="@drawable/add_device"/>
     <item
         android:id="@+id/pin_setup"
-        android:icon="@drawable/setup"
-        android:title="@string/title_pinsetup"/>
+        android:icon="@drawable/setup"/>
     <item
         android:id="@+id/scan"
-        android:icon="@drawable/view"
-        android:title="@string/scan"/>
+        android:icon="@drawable/view"/>
 
 </menu>

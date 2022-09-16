@@ -12,7 +12,7 @@
         android:layout_height="0dp" />
 
     <include
-        layout="@layout/fragment_gallery"
+        layout="@layout/activity_pin_input"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
