@@ -5,11 +5,16 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
@@ -27,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
      */
     private static final boolean AUTO_HIDE = true;
     private static boolean MANUAL_HIDE = false;
-
+    SQLiteDatabase db;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -72,8 +77,33 @@ public class SplashActivity extends AppCompatActivity {
             hide();
 
             if( !MANUAL_HIDE ) {
-                Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
-                SplashActivity.this.startActivity(pininput);
+
+                // Edited by BINGO
+                // Determine whether password is set or not
+
+                db=openOrCreateDatabase("sightsecuritydb.db", Context.MODE_PRIVATE,null);
+
+                String query = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, user_email Text, user_password Text)";
+                db.execSQL(query);
+
+                Cursor c=db.rawQuery("SELECT * FROM User",null);
+                //Log.d("test", "run: Cursor count"+c.getCount());
+                if(c.getCount()>0) {
+                    c.close();
+                    db.close();
+                    //Log.d("test", "run: Cursor right to pininput");
+                    Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
+                    SplashActivity.this.startActivity(pininput);
+                }
+                else {
+                    c.close();
+                    db.close();
+                    //Log.d("test", "run: Cursor right to pinsetup");
+                    Intent intent = new Intent(SplashActivity.this, PinSetupActivity.class);
+                    SplashActivity.this.startActivity(intent);
+                }
+                //
+
             }
         }
     };
@@ -171,8 +201,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         MANUAL_HIDE = true;
-        Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
-        SplashActivity.this.startActivity(pininput);
+//        Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
+//        SplashActivity.this.startActivity(pininput);
         return super.onTouchEvent(event);
     }
 }

@@ -43,23 +43,29 @@
                     tools:ignore="MissingConstraints">
 
                     <EditText
-                        android:id="@+id/editTextNumberPassword"
+                        android:id="@+id/editTextNumberPassword1"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:backgroundTint="@color/mybackcolor"
                         android:ems="10"
                         android:focusable="false"
                         android:inputType="numberPassword"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
                         tools:ignore="MissingConstraints" />
 
                     <EditText
-                        android:id="@+id/editTextNumberPassword4"
+                        android:id="@+id/editTextNumberPassword2"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
                         android:backgroundTint="@color/mybackcolor"
                         android:focusable="false"
                         android:inputType="numberPassword"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
                         tools:ignore="MissingConstraints" />
 
                     <EditText
@@ -71,10 +77,13 @@
                         android:ems="10"
                         android:focusable="false"
                         android:inputType="numberPassword"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
                         tools:ignore="MissingConstraints" />
 
                     <EditText
-                        android:id="@+id/editTextNumberPassword2"
+                        android:id="@+id/editTextNumberPassword4"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp"
@@ -82,6 +91,9 @@
                         android:ems="10"
                         android:focusable="false"
                         android:inputType="numberPassword"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
                         tools:ignore="MissingConstraints" />
                 </LinearLayout>
 
@@ -132,10 +144,11 @@
                         android:gravity="center">
 
                         <Button
-                            android:id="@+id/button"
+                            android:id="@+id/button1"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="1"
                             android:textColor="@color/white"
                             android:textSize="30dp" />
@@ -146,6 +159,7 @@
                             android:layout_height="55dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="2"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -158,6 +172,7 @@
                             android:layout_height="55dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="3"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -177,6 +192,7 @@
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="4"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -189,6 +205,7 @@
                             android:layout_height="55dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="5"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -201,6 +218,7 @@
                             android:layout_height="55dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="6"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -219,6 +237,7 @@
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="7"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -231,6 +250,7 @@
                             android:layout_height="55dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="8"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -243,6 +263,7 @@
                             android:layout_height="55dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="9"
                             android:textColor="@color/white"
                             android:textSize="30dp"
@@ -258,10 +279,11 @@
 
 
                         <ImageButton
-                            android:id="@+id/imageButton"
+                            android:id="@+id/button10"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:src="@drawable/cancel" />
 
                         <Button
@@ -270,6 +292,7 @@
                             android:layout_height="55dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/btn_style"
+                            android:onClick="onClick"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="30dp"
