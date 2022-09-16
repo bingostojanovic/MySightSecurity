@@ -1,11 +1,15 @@
 package com.justin.mysightsecurity.ui.history;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,48 +52,65 @@ public class HistoryFragment extends Fragment {
 
         expandableListView.setAdapter(expandableListAdapter);
 
-//
-//
-//        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//
-//            @Override
-//            public void onGroupExpand(int groupPosition) {
-//                Toast.makeText(inflater,
-//                        expandableListTitle.get(groupPosition) + " List Expanded.",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager wm= getActivity().getWindowManager();
+        wm.getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
 
-//        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//
-//            @Override
-//            public void onGroupCollapse(int groupPosition) {
-//                Toast.makeText(inflate.,
-//                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-//                        Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//
+        expandableListView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
+
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+//                expandableListView.setGroupIndicator();
+            }
+        });
+
+        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+
+            }
+        });
+
 //        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 //            @Override
 //            public boolean onChildClick(ExpandableListView parent, View v,
 //                                        int groupPosition, int childPosition, long id) {
-//                Toast.makeText(
-//                        inflate.,
-//                        expandableListTitle.get(groupPosition)
-//                                + " -> "
-//                                + expandableListDetail.get(
-//                                expandableListTitle.get(groupPosition)).get(
-//                                childPosition), Toast.LENGTH_SHORT
-//                ).show();
-//                return false;
+//
 //            }
 //        });
 
         return root;
     }
-
+    public int GetPixelFromDips(float pixels) {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
+    }
+//    public int GetPixelFromDips(float pixels) {
+//        // Get the screen's density scale
+//        final float scale = getResources().getDisplayMetrics().density;
+//        // Convert the dps to pixels, based on density scale
+//        return (int) (pixels * scale + 0.5f);
+//    }
+//
+////    @Override
+////    public void onWindowFocusChanged(boolean hasFocus) {
+////        super.onWindowFocusChanged(hasFocus);
+////        DisplayMetrics metrics = new DisplayMetrics();
+////        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+////        int width = metrics.widthPixels;
+////        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+////            explvList.setIndicatorBounds(width-GetPixelFromDips(35), width-GetPixelFromDips(5));
+////        } else {
+////            explvList.setIndicatorBoundsRelative(width-GetPixelFromDips(35), width-GetPixelFromDips(5));
+////        }
+////    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

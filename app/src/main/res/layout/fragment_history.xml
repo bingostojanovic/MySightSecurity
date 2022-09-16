@@ -40,13 +40,13 @@
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:childDivider="@color/mybackcolor"
             android:divider="@android:color/darker_gray"
             android:dividerHeight="1dp"
             android:footerDividersEnabled="true"
+            android:indicatorLeft="800dp"
+            android:groupIndicator="@drawable/settings_selector"
             android:headerDividersEnabled="true"
-            android:indicatorLeft="?android:attr/expandableListPreferredChildIndicatorLeft"
-            tools:context=".mainActivity"/>
+            tools:context=".mainActivity" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
