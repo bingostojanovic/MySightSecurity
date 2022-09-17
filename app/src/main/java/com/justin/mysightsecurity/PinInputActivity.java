@@ -34,19 +34,21 @@ public class PinInputActivity extends Activity {
         count = 0;
 
         try {
-            db=openOrCreateDatabase("sightsecuritydb.db", Context.MODE_ENABLE_WRITE_AHEAD_LOGGING,null);
+            db=PinInputActivity.this.openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
         }catch (Exception e) {
             Toast.makeText(PinInputActivity.this, "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
             return;
         }
 
         Cursor c = db.rawQuery("SELECT * FROM User",null);
+
         if(c.getCount()==0) {
-            Toast.makeText(this, "Database Empty", 1000).show();
+            Toast.makeText(this, "Database Empty", Toast.LENGTH_SHORT).show();
         } else {
             c.moveToFirst();
             password = c.getString(2);
         }
+
         c.close();
         db.close();
 

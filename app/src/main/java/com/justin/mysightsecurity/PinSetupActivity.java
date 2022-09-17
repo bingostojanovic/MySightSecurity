@@ -26,9 +26,10 @@ public class PinSetupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin_setup);
 
         try {
-            db=openOrCreateDatabase("sightsecuritydb.db", Context.MODE_ENABLE_WRITE_AHEAD_LOGGING,null);
+            db=PinSetupActivity.this.openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
         }catch (Exception e) {
             Toast.makeText(PinSetupActivity.this, "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
+            db.close();
             return;
         }
 
@@ -45,28 +46,37 @@ public class PinSetupActivity extends AppCompatActivity {
 
                 if(password.getText().length() == 0) {
                     Toast.makeText(PinSetupActivity.this, "Password is Required!", Toast.LENGTH_SHORT).show();
-                    db.close();
+                    password.setText("");
+                    password2.setText("");
                     return;
                 }
                 if(password2.getText().length() == 0) {
                     Toast.makeText(PinSetupActivity.this, "Password Confirmation is Required!", Toast.LENGTH_SHORT).show();
-                    db.close();
+                    password.setText("");
+                    password2.setText("");
                     return;
                 }
                 if(!password.getText().toString().equals(password2.getText().toString()) ) {
                     Toast.makeText(PinSetupActivity.this, "Password must be matched!", Toast.LENGTH_SHORT).show();
-                    db.close();
+                    password.setText("");
+                    password2.setText("");
                     return;
                 }
 
+                if (password.getText().toString().length() != 4) {
+                    Toast.makeText(PinSetupActivity.this, "Password must be 4 characters!", Toast.LENGTH_SHORT).show();
+                    password.setText("");
+                    password2.setText("");
+                    return;
+                }
                 //
+                //values.put("id", 1);
                 values.put("user_email", "securitysight@gmail.com");
                 values.put("user_password", password.getText().toString());
 
-
                 try {
-//                    db.insert("User", null, values);
-                    db.update("User", values, "id=?", new String[]{"0"});
+                    //db.insert("User", null, values);
+                    db.update("User", values, "id=?", new String[]{"1"});
                 }catch (Exception e) {
                     Toast.makeText(PinSetupActivity.this, "DataBase error: "+ e.toString(), Toast.LENGTH_SHORT).show();
                     db.close();
@@ -78,17 +88,12 @@ public class PinSetupActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(PinSetupActivity.this, PinInputActivity.class);
                 PinSetupActivity.this.startActivity(intent);
+
                 return;
 
             }
         });
 
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        return super.onTouchEvent(event);
     }
 
 }

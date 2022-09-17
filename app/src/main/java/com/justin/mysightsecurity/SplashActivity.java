@@ -1,5 +1,7 @@
 package com.justin.mysightsecurity;
 
+import static android.database.sqlite.SQLiteDatabase.CREATE_IF_NECESSARY;
+
 import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
+import android.widget.Toast;
 
 import com.justin.mysightsecurity.databinding.ActivitySplashBinding;
 
@@ -32,7 +35,6 @@ public class SplashActivity extends AppCompatActivity {
      */
     private static final boolean AUTO_HIDE = true;
     private static boolean MANUAL_HIDE = false;
-    SQLiteDatabase db;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -44,6 +46,7 @@ public class SplashActivity extends AppCompatActivity {
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
+    private ContentValues values;
     private final Handler mHideHandler = new Handler(Looper.myLooper());
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -81,27 +84,33 @@ public class SplashActivity extends AppCompatActivity {
                 // Edited by BINGO
                 // Determine whether password is set or not
 
-                db=openOrCreateDatabase("sightsecuritydb.db", Context.MODE_PRIVATE,null);
+                SQLiteDatabase db;
+
+                db=SplashActivity.this.openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
 
                 String query = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, user_email Text, user_password Text)";
                 db.execSQL(query);
 
-                Cursor c=db.rawQuery("SELECT * FROM User",null);
-                //Log.d("test", "run: Cursor count"+c.getCount());
-                if(c.getCount()>0) {
-                    c.close();
-                    db.close();
-                    //Log.d("test", "run: Cursor right to pininput");
-                    Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
-                    SplashActivity.this.startActivity(pininput);
+                values = new ContentValues();
+
+                values.put("id", 1);
+                values.put("user_email", "securitysight@gmail.com");
+                values.put("user_password", "0000");
+
+                try {
+                    db.insert("User", null, values);
+
+                } catch (Exception e) {
+                   Log.d("DB Insertion Error", e.toString());
                 }
-                else {
-                    c.close();
-                    db.close();
-                    //Log.d("test", "run: Cursor right to pinsetup");
-                    Intent intent = new Intent(SplashActivity.this, PinSetupActivity.class);
-                    SplashActivity.this.startActivity(intent);
-                }
+
+//                db.insert("User", null, values);
+
+                db.close();
+
+                Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
+                SplashActivity.this.startActivity(pininput);
+
                 //
 
             }
