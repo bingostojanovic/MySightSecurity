@@ -176,6 +176,11 @@ public class PinInputActivity extends Activity {
         String password = text1.getText().toString() +text2.getText().toString() + text3.getText().toString() + text4.getText().toString();
 
         if(this.password.equals(password)) {
+            text4.setText("");
+            text3.setText("");
+            text2.setText("");
+            text1.setText("");
+            count = 0;
             Intent pininput = new Intent(PinInputActivity.this, MainActivity.class);
             PinInputActivity.this.startActivity(pininput);
             return true;

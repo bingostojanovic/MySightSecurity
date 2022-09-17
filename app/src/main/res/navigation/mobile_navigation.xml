@@ -21,7 +21,21 @@
         android:id="@+id/add_device"
         android:name="com.justin.mysightsecurity.ui.add_device.AddDeviceFragment"
         android:label="@string/title_adddevice"
-        tools:layout="@layout/fragment_adddevice" />
+        tools:layout="@layout/fragment_adddevice" >
+        <action
+            android:id="@+id/action_add_device_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" >
+            <argument
+                android:name="qrCode"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="null" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/pin_setup"
@@ -38,5 +52,11 @@
         android:id="@+id/galleryFragment"
         android:name="com.justin.mysightsecurity.GalleryFragment"
         android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <argument
+            android:name="qrCode"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
+    </fragment>
 </navigation>

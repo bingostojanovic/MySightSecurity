@@ -198,11 +198,4 @@ public class SplashActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        MANUAL_HIDE = true;
-//        Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
-//        SplashActivity.this.startActivity(pininput);
-        return super.onTouchEvent(event);
-    }
 }
