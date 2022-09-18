@@ -4,31 +4,32 @@ import java.util.HashMap;
 import java.util.List;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.justin.mysightsecurity.databinding.FragmentHistoryBinding;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
 
     private Context context;
     private List<String> expandableListTitle;
-    private HashMap<String, List<String>> expandableListDetail;
+    private HashMap<String, HashMap<String, String>> expandableListDetail;
 
     public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                       HashMap<String, List<String>> expandableListDetail) {
+                                       HashMap<String, HashMap<String, String>> expandableListDetail) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
     }
 
     @Override
-    public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
+    public HashMap<String, String> getChild(int listPosition, int expandedListPosition) {
+        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition));
     }
 
     @Override
@@ -39,22 +40,27 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
+        final HashMap<String, String> expandedListItemContent = getChild(listPosition, expandedListPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
         TextView expandedListTextView = (TextView) convertView
-                .findViewById(R.id.expandedListItem);
-        expandedListTextView.setText(expandedListText);
+                .findViewById(R.id.expandedListItemTime);
+        expandedListTextView.setText(expandedListItemContent.get("time"));
+        ImageButton expandedListImageView = (ImageButton) convertView
+                .findViewById(R.id.expandedListItemImage);
+        //expandedListImageView.setImageURI(Uri.parse(expandedListItemContent.get("image")));
+
+        //Something have to be done above-BINGO
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int listPosition) {
         return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .size();
+                .size()/2;
     }
 
     @Override

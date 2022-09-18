@@ -1,15 +1,18 @@
 package com.justin.mysightsecurity.ui.history;
 
-import android.graphics.drawable.Drawable;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.justin.mysightsecurity.CustomExpandableListAdapter;
-import com.justin.mysightsecurity.ExpandableListDataPump;
 import com.justin.mysightsecurity.R;
 import com.justin.mysightsecurity.databinding.FragmentHistoryBinding;
 
@@ -32,8 +34,11 @@ public class HistoryFragment extends Fragment {
     ExpandableListView expandableListView;
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
-    HashMap<String, List<String>> expandableListDetail;
+    HashMap<String, HashMap<String, String>> expandableListDetail;
 
+    SQLiteDatabase db;
+
+    @SuppressLint("DefaultLocale")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HistoryViewModel dashboardViewModel =
@@ -45,44 +50,85 @@ public class HistoryFragment extends Fragment {
         final TextView textView = binding.textDashboard;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        expandableListView = (ExpandableListView) root.findViewById(R.id.expandableListView);
-        expandableListDetail = ExpandableListDataPump.getData();
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new CustomExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail);
+        //db config Edited BY BINGO!
 
-        expandableListView.setAdapter(expandableListAdapter);
+        try {
+            db= getActivity().openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
+        }catch (Exception e) {
+            Toast.makeText(getActivity(), "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
+            db.close();
+        }
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        WindowManager wm= getActivity().getWindowManager();
-        wm.getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels;
+        Cursor c = db.rawQuery("SELECT * FROM History",null);
+        //Log.d("My Test", "All is Ok right here!");
+        if(c.getCount()==0) {
+            //Log.d("My Test", "All is Ok right if");
+            Toast.makeText(getActivity(), "No History", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.d("My Test", "All is Ok right else");
+            c.moveToFirst();
+            expandableListDetail = new HashMap<String, HashMap<String, String>>();
+            expandableListTitle = new ArrayList<String>();
 
-        expandableListView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
+            HashMap<String, String> buffer;
 
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            do {
+                buffer = new HashMap<String, String>();
+                buffer.put("time", c.getString(2));
+                buffer.put("image",c.getString(3));
+//                Log.d("bingo", String.format("%d", buffer.size()));
+//                Toast.makeText(getActivity(),String.format("%d", buffer.size()), Toast.LENGTH_SHORT ).show();
+                expandableListDetail.put(c.getString(1), buffer);
+                expandableListTitle.add(c.getString(1));
+            } while (c.moveToNext());
+            expandableListView = (ExpandableListView) root.findViewById(R.id.expandableListView);
 
-            @Override
-            public void onGroupExpand(int groupPosition) {
+            expandableListAdapter = new CustomExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail);
+
+            expandableListView.setAdapter(expandableListAdapter);
+
+            DisplayMetrics metrics = new DisplayMetrics();
+            WindowManager wm= getActivity().getWindowManager();
+            wm.getDefaultDisplay().getMetrics(metrics);
+            int width = metrics.widthPixels;
+
+            expandableListView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
+
+            expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                @Override
+                public void onGroupExpand(int groupPosition) {
 //                expandableListView.setGroupIndicator();
-            }
-        });
 
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+                }
+            });
 
-            @Override
-            public void onGroupCollapse(int groupPosition) {
+            expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+                @Override
+                public void onGroupCollapse(int groupPosition) {
 
 
-            }
-        });
+                }
+            });
 
-//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//            @Override
-//            public boolean onChildClick(ExpandableListView parent, View v,
-//                                        int groupPosition, int childPosition, long id) {
-//
-//            }
-//        });
+            expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v,
+                                            int groupPosition, int childPosition, long id) {
+
+                    return true;
+                }
+            });
+
+        }
+        //Log.d("My Test", "Before close");
+        c.close();
+        //Log.d("My Test", "before db.close");
+        db.close();
+        //Log.d("My Test", "afer db.close");
+        //Edited by BINGO!
+
 
         return root;
     }

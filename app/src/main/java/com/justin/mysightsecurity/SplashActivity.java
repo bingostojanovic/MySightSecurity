@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
-    private ContentValues values;
+    private ContentValues values, val;
     private final Handler mHideHandler = new Handler(Looper.myLooper());
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -88,8 +88,17 @@ public class SplashActivity extends AppCompatActivity {
 
                 db=SplashActivity.this.openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
 
-                String query = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, user_email Text, user_password Text)";
-                db.execSQL(query);
+                String query_user = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, user_email Text, user_password Text)";
+                String query_history = "CREATE TABLE IF NOT EXISTS History (id INTEGER PRIMARY KEY AUTOINCREMENT, date Text, time Text, img_url Text, mov_url Text)";
+                db.execSQL(query_user);
+                db.execSQL(query_history);
+//
+//                val = new ContentValues();
+//                val.put("date", "9, September, 2022");
+//                val.put("time", "6:30 PM");
+//                val.put("img_url", "/res/drawale/cancel.png");
+//                val.put("mov_url", "/res/raw/sample.mp4");
+//                db.insert("History", null, val);
 
                 values = new ContentValues();
 
@@ -101,7 +110,7 @@ public class SplashActivity extends AppCompatActivity {
                     db.insert("User", null, values);
 
                 } catch (Exception e) {
-                   Log.d("DB Insertion Error", e.toString());
+                   Log.d("DB initialization Error", e.toString());
                 }
 
 //                db.insert("User", null, values);
