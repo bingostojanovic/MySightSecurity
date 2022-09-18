@@ -51,19 +51,19 @@ public class AddDeviceFragment extends Fragment {
         btnAddDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(textDeviceName.getText().length() == 0 || textDeviceId.getText().length() == 0 || textSSID.getText().length() == 0 || textPassword.getText().length() == 0) {
+                    Toast.makeText(getActivity(), "All fields are required!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                 alert.setTitle("Are these informations correct?");
 
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Your action here
-                        if(textDeviceName.getText().length() == 0 || textDeviceId.getText().length() == 0 || textSSID.getText().length() == 0 || textPassword.getText().length() == 0) {
-                            Toast.makeText(getActivity(), "All fields are required!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
 
                         String str = "{\"name\": \"" + textDeviceName.getText().toString() + "\", \"id\": \"" + textDeviceId.getText().toString() + "\", \"ssid\": \""+textSSID.getText().toString() +"\", \"pass\": \""+textPassword.getText().toString()+"\"}";
-                        Toast.makeText(getActivity(), str, 5000);
+                        Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT);
                         Bundle bundle = new Bundle();
                         bundle.putString("deviceinfo", str);
 

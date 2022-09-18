@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -17,7 +18,7 @@ public class PinSetupActivity extends AppCompatActivity {
 
     private  Button pinSetupButton;
     private SQLiteDatabase db;
-    private TextView password, password2;
+    private TextView oldpassword, password, password2;
     private ContentValues values;
 
     @Override
@@ -32,10 +33,14 @@ public class PinSetupActivity extends AppCompatActivity {
             db.close();
             return;
         }
+        Cursor c = db.rawQuery("SELECT * FROM User", null);
+        c.moveToFirst();
+        String old_pass = c.getString(2);
 
         values=new ContentValues();
 
         password = (TextView) findViewById(R.id.password);
+        oldpassword = (TextView) findViewById(R.id.oldpassword);
         password2 = (TextView) findViewById(R.id.password2);
 
         pinSetupButton=(Button) findViewById(R.id.pinsetup);
@@ -43,23 +48,35 @@ public class PinSetupActivity extends AppCompatActivity {
         pinSetupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(oldpassword.getText().length() == 0) {
+                    Toast.makeText(PinSetupActivity.this, "Old Password is Required!", Toast.LENGTH_SHORT).show();
+                    password.setText("");
+                    password2.setText("");
+                }
                 if(password.getText().length() == 0) {
                     Toast.makeText(PinSetupActivity.this, "Password is Required!", Toast.LENGTH_SHORT).show();
-                    password.setText("");
+                    oldpassword.setText("");
                     password2.setText("");
                     return;
                 }
                 if(password2.getText().length() == 0) {
                     Toast.makeText(PinSetupActivity.this, "Password Confirmation is Required!", Toast.LENGTH_SHORT).show();
                     password.setText("");
+                    oldpassword.setText("");
+                    return;
+                }
+                if(!oldpassword.getText().toString().equals(old_pass)) {
+                    Toast.makeText(PinSetupActivity.this, "Old password is incorrect!", Toast.LENGTH_SHORT).show();
+                    password.setText("");
                     password2.setText("");
+                    oldpassword.setText("");
                     return;
                 }
                 if(!password.getText().toString().equals(password2.getText().toString()) ) {
                     Toast.makeText(PinSetupActivity.this, "Password must be matched!", Toast.LENGTH_SHORT).show();
                     password.setText("");
                     password2.setText("");
+                    oldpassword.setText("");
                     return;
                 }
 
@@ -67,6 +84,7 @@ public class PinSetupActivity extends AppCompatActivity {
                     Toast.makeText(PinSetupActivity.this, "Password must be 4 characters!", Toast.LENGTH_SHORT).show();
                     password.setText("");
                     password2.setText("");
+                    oldpassword.setText("");
                     return;
                 }
                 //
