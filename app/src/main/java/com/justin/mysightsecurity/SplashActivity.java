@@ -102,7 +102,6 @@ public class SplashActivity extends AppCompatActivity {
 
                 values = new ContentValues();
 
-                values.put("id", 1);
                 values.put("user_email", "securitysight@gmail.com");
                 values.put("user_password", "0000");
 
