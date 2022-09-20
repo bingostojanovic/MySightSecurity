@@ -78,6 +78,21 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btnScan = (Button) view.findViewById(R.id.btn_scan);
+
+        btnScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Here, QR scan code must be located to get IP camera's address and port
+
+
+
+
+
+                // Edited by BINGO
+            }
+        });
+
         String str = getArguments().getString("deviceinfo");
 
         imageView = (ImageView) view.findViewById(R.id.imgQR);
@@ -88,7 +103,6 @@ public class GalleryFragment extends Fragment {
         bmp = Bitmap.createBitmap(qr1.size, qr1.size, Bitmap.Config.RGB_565);
         for (int y = 0; y < qr1.size; y++) {
             for (int x = 0; x < qr1.size; x++) {
-//                        (... paint qr1.getModule(x, y) ...)
                 bmp.setPixel(x, y, qr1.getModule(x, y) ? Color.BLACK : Color.WHITE);
             }
 
