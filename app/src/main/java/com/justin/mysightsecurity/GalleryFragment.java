@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
@@ -32,6 +33,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.justin.mysightsecurity.databinding.FragmentGalleryBinding;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +43,9 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class GalleryFragment extends Fragment {
+    public interface OnIPCameraListener {
+        public void onIPCameraFind(String ip);
+    }
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,8 +58,10 @@ public class GalleryFragment extends Fragment {
     private String mParam2;
     Bitmap bmp;
     private ImageView imageView;
+    private SocketClient mThread;
 
     private Button btnScan;
+    public OnIPCameraListener onIPCameraListner;
     public GalleryFragment() {
         // Required empty public constructor
     }
@@ -77,14 +84,26 @@ public class GalleryFragment extends Fragment {
         return fragment;
     }
 
+    public void setIPCameraListner(OnIPCameraListener listener) {
+        this.onIPCameraListner = listener;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.onIPCameraListner = null;
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        setIPCameraListner(new OnIPCameraListener() {
+            @Override
+            public void onIPCameraFind(String ip) {
+                // Code to handle object ready
+                String mip = ip;
+            }
+        });
     }
 
     @Override
@@ -104,13 +123,13 @@ public class GalleryFragment extends Fragment {
 
         String str = getArguments().getString("deviceinfo");
 
-        imageView = (ImageView) view.findViewById(R.id.imgQR);
+//        imageView = (ImageView) view.findViewById(R.id.imgQR);
         String charset = "UTF-8";
         Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 
         CreateQRCode(str, charset, hintMap,250, 250);
-//
+
 //        List<QrSegment> segs = QrSegment.makeSegments(str);
 //        QrCode qr1 = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 40, 2, false);
 //
@@ -130,10 +149,9 @@ public class GalleryFragment extends Fragment {
     }
 
     private void deviceScan() {
-
+        mThread = new SocketClient(this,"", 0);
     }
     public  void CreateQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
-
 
         try {
             //generating qr code.
