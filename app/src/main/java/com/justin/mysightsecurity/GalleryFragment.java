@@ -151,7 +151,7 @@ public class GalleryFragment extends Fragment {
 
         String str = getArguments().getString("deviceinfo");
 
-//        imageView = (ImageView) view.findViewById(R.id.imgQR);
+        imageView = (ImageView) view.findViewById(R.id.imgQR);
         String charset = "UTF-8";
         Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
