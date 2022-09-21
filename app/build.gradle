@@ -44,6 +44,6 @@ dependencies {
 
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
-//
-    implementation 'android.support:recyclerview-v7:27.1.1'
+
+//    implementation 'android.support:recyclerview-v7:23.0.1'
 }

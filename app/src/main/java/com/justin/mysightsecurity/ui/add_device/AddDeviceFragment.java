@@ -124,7 +124,7 @@ public class AddDeviceFragment extends Fragment {
 
         boolean isConnectionSuccessful = wifiManager.reconnect();
 
-        return true;
+        return isConnectionSuccessful;
     }
 
     @Override
