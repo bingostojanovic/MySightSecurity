@@ -32,6 +32,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -103,6 +104,10 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
+//        bar.setVisibility(View.VISIBLE);
+
         this.onIPCameraListner = null;
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);

@@ -3,8 +3,10 @@ package com.justin.mysightsecurity;
 import java.util.HashMap;
 import java.util.List;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +15,25 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.justin.mysightsecurity.ui.history.HistoryFragment;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
 
     private Context context;
+    private Fragment fragment;
     private List<String> expandableListTitle;
     private HashMap<String, HashMap<String, String>> expandableListDetail;
 
-    public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
+    public CustomExpandableListAdapter(Context context, Fragment fragment, List<String> expandableListTitle,
                                        HashMap<String, HashMap<String, String>> expandableListDetail) {
         this.context = context;
+        this.fragment = fragment;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
     }
@@ -50,9 +61,24 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
                 .findViewById(R.id.expandedListItemTime);
         expandedListTextView.setText(expandedListItemContent.get("time"));
         ImageButton expandedListImageView = (ImageButton) convertView
-                .findViewById(R.id.expandedListItem);
+                .findViewById(R.id.expandedListItemImage);
+        // Something Like bellow have to be accomplished
+
         //expandedListImageView.setImageURI(Uri.parse(expandedListItemContent.get("image")));
 
+        expandedListImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(CustomExpandableListAdapter.this.context, String.format("%d", listPosition), Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("playinfo", String.format("%d", listPosition));
+
+                NavController nav = NavHostFragment.findNavController(fragment);
+                //nav.navigateUp();
+                nav.navigate(R.id.action_history_to_playFragment, bundle);
+
+            }
+        });
         //Something have to be done above-BINGO
         return convertView;
     }

@@ -32,7 +32,7 @@ public class SocketClient extends Thread {
 			mIP = String.format("192.168.0.%d", i);
 			try {
 				mSocket = new Socket();
-				mSocket.connect(new InetSocketAddress(mIP, mPort), 5000); // hard-code server address
+				mSocket.connect(new InetSocketAddress(mIP, mPort), 3000); // hard-code server address
 				mSocket.close();
 				gallery.onIPCameraListner.onIPCameraFind(mIP, mPort);
 				break;
