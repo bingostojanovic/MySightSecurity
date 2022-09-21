@@ -3,7 +3,10 @@ package com.justin.mysightsecurity;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -32,6 +37,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.justin.mysightsecurity.databinding.FragmentGalleryBinding;
+import com.justin.mysightsecurity.ui.add_device.AddDeviceFragment;
 
 import java.io.Console;
 import java.util.HashMap;
@@ -44,7 +50,7 @@ import java.util.Map;
  */
 public class GalleryFragment extends Fragment {
     public interface OnIPCameraListener {
-        public void onIPCameraFind(String ip);
+        public void onIPCameraFind(String ip, int port);
     }
 
     // TODO: Rename parameter arguments, choose names that match
@@ -59,6 +65,8 @@ public class GalleryFragment extends Fragment {
     Bitmap bmp;
     private ImageView imageView;
     private SocketClient mThread;
+    private Activity selfActivity=null;
+    androidx.appcompat.app.AlertDialog.Builder alert = null;
 
     private Button btnScan;
     public OnIPCameraListener onIPCameraListner;
@@ -97,11 +105,28 @@ public class GalleryFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        selfActivity = getActivity();
+        alert = new androidx.appcompat.app.AlertDialog.Builder(selfActivity);
+        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        alert.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+
         setIPCameraListner(new OnIPCameraListener() {
             @Override
-            public void onIPCameraFind(String ip) {
-                // Code to handle object ready
-                String mip = ip;
+            public void onIPCameraFind(String ip, int port) {
+                String msg = "Available IP Camera : "+ip+"  : Port"+String.valueOf(port);
+
+                selfActivity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(selfActivity, msg, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }

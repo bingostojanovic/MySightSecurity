@@ -27,14 +27,14 @@ public class SocketClient extends Thread {
 		// TODO Auto-generated method stub
 		super.run();
 
-		int port = 554;//554 8554 7236
+		mPort = 554;//554 8554 7236
 		for(int i=1; i<=255; i++){
 			mIP = String.format("192.168.0.%d", i);
 			try {
 				mSocket = new Socket();
 				mSocket.connect(new InetSocketAddress(mIP, mPort), 5000); // hard-code server address
 				mSocket.close();
-				gallery.onIPCameraListner.onIPCameraFind(mIP);
+				gallery.onIPCameraListner.onIPCameraFind(mIP, mPort);
 				break;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
