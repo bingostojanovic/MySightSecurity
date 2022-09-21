@@ -50,7 +50,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
                 .findViewById(R.id.expandedListItemTime);
         expandedListTextView.setText(expandedListItemContent.get("time"));
         ImageButton expandedListImageView = (ImageButton) convertView
-                .findViewById(R.id.expandedListItemImage);
+                .findViewById(R.id.expandedListItem);
         //expandedListImageView.setImageURI(Uri.parse(expandedListItemContent.get("image")));
 
         //Something have to be done above-BINGO

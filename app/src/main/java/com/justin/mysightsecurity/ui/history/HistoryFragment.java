@@ -19,10 +19,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.justin.mysightsecurity.CustomExpandableListAdapter;
 import com.justin.mysightsecurity.R;
 import com.justin.mysightsecurity.databinding.FragmentHistoryBinding;
+import com.justin.mysightsecurity.ui.add_device.AddDeviceFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,6 +110,7 @@ public class HistoryFragment extends Fragment {
                 @Override
                 public void onGroupCollapse(int groupPosition) {
 
+                    Toast.makeText(getActivity(), String.format("%d", groupPosition), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -117,6 +120,13 @@ public class HistoryFragment extends Fragment {
                 public boolean onChildClick(ExpandableListView parent, View v,
                                             int groupPosition, int childPosition, long id) {
 
+
+                    Toast.makeText(getActivity(), String.format("%d", groupPosition), Toast.LENGTH_SHORT).show();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("playinfo", str);
+//
+//                    NavHostFragment.findNavController(HistoryFragment.this)
+//                            .navigate(R.id.action_history_to_playFragment, bundle);
                     return true;
                 }
             });
