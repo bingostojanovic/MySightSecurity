@@ -6,7 +6,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,13 +22,16 @@
         android:theme="@style/Theme.MySightSecurity"
         tools:targetApi="31">
         <activity
+            android:name=".SocketServerActivity"
+            android:exported="false" />
+        <activity
             android:name=".PinSetupActivity"
             android:exported="false"
-            android:theme="@style/Theme.MySightSecurity.NoActionBar"/>
+            android:theme="@style/Theme.MySightSecurity.NoActionBar" />
         <activity
             android:name=".PinInputActivity"
             android:exported="false"
-            android:theme="@style/Theme.MySightSecurity.NoActionBar"/>
+            android:theme="@style/Theme.MySightSecurity.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -41,7 +47,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
