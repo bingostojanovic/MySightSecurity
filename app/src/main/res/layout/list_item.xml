@@ -8,17 +8,19 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/expandedListItemImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/history_btn_style"
-        android:src="@drawable/gallery_show_3" />
+        <ImageButton
+            android:id="@+id/expandedListItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/history_btn_style"
+            android:src="@drawable/gallery_show_3" />
 
-    <TextView
-        android:id="@+id/expandedListItemTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/expandedListItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textColor="@android:color/white" />
+
+
 </LinearLayout>

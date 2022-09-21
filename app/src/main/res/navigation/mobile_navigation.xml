@@ -15,7 +15,11 @@
         android:id="@+id/history"
         android:name="com.justin.mysightsecurity.ui.history.HistoryFragment"
         android:label="@string/history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_history_to_playFragment"
+            app:destination="@id/playFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/add_device"
@@ -59,4 +63,9 @@
             app:nullable="true"
             android:defaultValue="null" />
     </fragment>
+    <fragment
+        android:id="@+id/playFragment"
+        android:name="com.justin.mysightsecurity.PlayFragment"
+        android:label="fragment_play"
+        tools:layout="@layout/fragment_play" />
 </navigation>
