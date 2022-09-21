@@ -67,13 +67,11 @@ public class AddDeviceFragment extends Fragment {
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Your action here
-                        String str = "{\"name\": \"" + textDeviceName.getText().toString()
-                                + "\", \"id\": \"" + textDeviceId.getText().toString()
-                                + "\", \"ssid\": \""+textSSID.getText().toString()
-                                +"\", \"pass\": \""+textPassword.getText().toString()
-                                +"\"}";
                         Bundle bundle = new Bundle();
-                        bundle.putString("deviceinfo", str);
+                        bundle.putString("device_name", textDeviceName.getText().toString());
+                        bundle.putString("device_id", textDeviceId.getText().toString());
+                        bundle.putString("ssid", textSSID.getText().toString());
+                        bundle.putString("password", textPassword.getText().toString());
 
                         NavHostFragment.findNavController(AddDeviceFragment.this)
                                 .navigate(R.id.action_add_device_to_galleryFragment, bundle);

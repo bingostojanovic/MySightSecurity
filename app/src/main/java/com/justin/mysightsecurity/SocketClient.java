@@ -50,6 +50,7 @@ public class SocketClient extends Thread {
 				}
 			}
 		}
+		gallery.onIPCameraListner.onIPCameraFind("",-1);
 	}
 	
 	public void close() {

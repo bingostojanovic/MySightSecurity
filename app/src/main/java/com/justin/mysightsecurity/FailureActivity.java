@@ -1,68 +1,68 @@
 package com.justin.mysightsecurity;
 
-import static android.database.sqlite.SQLiteDatabase.CREATE_IF_NECESSARY;
-
 import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
-import android.widget.Toast;
 
-import com.justin.mysightsecurity.databinding.ActivitySplashBinding;
+import com.justin.mysightsecurity.databinding.ActivityFailureBinding;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SplashActivity extends AppCompatActivity {
+public class FailureActivity extends AppCompatActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
     private static boolean MANUAL_HIDE = false;
+
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+    private static final int AUTO_HIDE_DELAY_MILLIS = 1500;
 
     /**
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
-    private ContentValues values, val;
     private final Handler mHideHandler = new Handler(Looper.myLooper());
+    private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
             // Delayed removal of status and navigation bar
             if (Build.VERSION.SDK_INT >= 30) {
-
+//                mContentView.getWindowInsetsController().hide(
+//                        WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
             } else {
                 // Note that some of these constants are new as of API 16 (Jelly Bean)
                 // and API 19 (KitKat). It is safe to use them, as they are inlined
                 // at compile-time and do nothing on earlier devices.
-
+//                mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+//                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
             }
         }
     };
+    private View mControlsView;
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -71,58 +71,20 @@ public class SplashActivity extends AppCompatActivity {
             if (actionBar != null) {
                 actionBar.show();
             }
+            //mControlsView.setVisibility(View.VISIBLE);
         }
     };
     private boolean mVisible;
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
+
             hide();
-
             if( !MANUAL_HIDE ) {
-
                 // Edited by BINGO
                 // Determine whether password is set or not
-
-                SQLiteDatabase db;
-
-                db=SplashActivity.this.openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
-
-                String query_user = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, user_email Text, user_password Text)";
-                String query_history = "CREATE TABLE IF NOT EXISTS History (id INTEGER PRIMARY KEY AUTOINCREMENT, date Text, time Text, img_url Text, mov_url Text)";
-                String query_device = "CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY AUTOINCREMENT, device_name Text, device_id Text, ip_address Text, port int)";
-                db.execSQL(query_user);
-                db.execSQL(query_history);
-                db.execSQL(query_device);
-//
-//                val = new ContentValues();
-//                val.put("date", "9, September, 2022");
-//                val.put("time", "6:30 PM");
-//                val.put("img_url", "/res/drawale/cancel.png");
-//                val.put("mov_url", "/res/raw/sample.mp4");
-//                db.insert("History", null, val);
-
-                values = new ContentValues();
-
-                values.put("user_email", "securitysight@gmail.com");
-                values.put("user_password", "0000");
-
-                try {
-                    db.insert("User", null, values);
-
-                } catch (Exception e) {
-                   Log.d("DB initialization Error", e.toString());
-                }
-
-//                db.insert("User", null, values);
-
-                db.close();
-
-                Intent pininput = new Intent(SplashActivity.this, PinInputActivity.class);
-                SplashActivity.this.startActivity(pininput);
-
-                //
-
+                Intent intent = new Intent(FailureActivity.this, MainActivity.class);
+                FailureActivity.this.startActivity(intent);
             }
         }
     };
@@ -149,20 +111,31 @@ public class SplashActivity extends AppCompatActivity {
             return false;
         }
     };
-    private ActivitySplashBinding binding;
+    private ActivityFailureBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySplashBinding.inflate(getLayoutInflater());
+
+        binding = ActivityFailureBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         mVisible = true;
+//        mControlsView = binding.fullscreenContentControls;
+//        mContentView = binding.fullscreenContent;
+
+        // Set up the user interaction to manually show or hide the system UI.
+        mContentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggle();
+            }
+        });
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        //binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
+       //binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -172,7 +145,7 @@ public class SplashActivity extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(3000);
+        delayedHide(100);
     }
 
     private void toggle() {
@@ -189,6 +162,7 @@ public class SplashActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        //mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
@@ -198,9 +172,13 @@ public class SplashActivity extends AppCompatActivity {
 
     private void show() {
         // Show the system bar
-        if (Build.VERSION.SDK_INT >= 30) {
-        } else {
-        }
+//        if (Build.VERSION.SDK_INT >= 30) {
+//            mContentView.getWindowInsetsController().show(
+//                    WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
+//        } else {
+//            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+//        }
         mVisible = true;
 
         // Schedule a runnable to display UI elements after a delay
@@ -216,5 +194,4 @@ public class SplashActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-
 }
