@@ -37,9 +37,12 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.justin.mysightsecurity.databinding.FragmentGalleryBinding;
+import com.justin.mysightsecurity.socket.Global;
+import com.justin.mysightsecurity.socket.ServerThread;
 import com.justin.mysightsecurity.ui.add_device.AddDeviceFragment;
 
 import java.io.Console;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +67,6 @@ public class GalleryFragment extends Fragment {
     private String mParam2;
     Bitmap bmp;
     private ImageView imageView;
-    private SocketClient mThread;
     private Activity selfActivity=null;
     androidx.appcompat.app.AlertDialog.Builder alert = null;
 
@@ -106,6 +108,7 @@ public class GalleryFragment extends Fragment {
         }
 
         selfActivity = getActivity();
+        Global.activity = selfActivity;
         alert = new androidx.appcompat.app.AlertDialog.Builder(selfActivity);
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -174,8 +177,10 @@ public class GalleryFragment extends Fragment {
     }
 
     private void deviceScan() {
-        mThread = new SocketClient(this,"", 0);
+        Global.serverThread = new Thread(new ServerThread());
+        Global.serverThread.start();
     }
+
     public  void CreateQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
 
         try {
@@ -252,5 +257,15 @@ public class GalleryFragment extends Fragment {
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_gallery, container, false);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            Global.serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
