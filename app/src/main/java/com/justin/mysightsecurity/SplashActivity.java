@@ -90,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 String query_user = "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, user_email Text, user_password Text)";
                 String query_history = "CREATE TABLE IF NOT EXISTS History (id INTEGER PRIMARY KEY AUTOINCREMENT, date Text, time Text, img_url Text, mov_url Text)";
-                String query_device = "CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY AUTOINCREMENT, device_name Text, device_id Text, ip_address Text, port int)";
+                String query_device = "CREATE TABLE IF NOT EXISTS Device (id INTEGER PRIMARY KEY AUTOINCREMENT, device_name Text, device_id Text, ip_address Text, port_number int, image_path Text)";
                 db.execSQL(query_user);
                 db.execSQL(query_history);
                 db.execSQL(query_device);
