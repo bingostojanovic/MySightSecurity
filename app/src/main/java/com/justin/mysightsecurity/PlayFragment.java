@@ -1,12 +1,23 @@
 package com.justin.mysightsecurity;
 
+import android.app.FragmentManager;
+import android.content.ClipData;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,12 +64,34 @@ public class PlayFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
+        bar.setVisibility(View.INVISIBLE);
+//        BottomNavigationView bottomNav = (BottomNavigationView) getActivity().findViewById(R.id.nav_view);
+//        bottomNav.setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
+        bar.setVisibility(View.VISIBLE);
+//
+//        FragmentManager fm = getActivity().getFragmentManager();
+//        fm.popBackStackImmediate();
+//        BottomNavigationView bottomNav = (BottomNavigationView) getActivity().findViewById(R.id.nav_view);
+//        bottomNav.setVisibility(View.VISIBLE);
+
+        //((MainActivity)getActivity()).dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Toast.makeText(getActivity(), getArguments().getString("playinfo"), Toast.LENGTH_SHORT).show();
+
         return inflater.inflate(R.layout.fragment_play, container, false);
     }
 }

@@ -5,8 +5,11 @@ import static android.graphics.Color.WHITE;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -29,6 +32,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -72,6 +76,7 @@ public class GalleryFragment extends Fragment {
 
     private Button btnScan;
     public OnIPCameraListener onIPCameraListner;
+    public SQLiteDatabase db;
     public GalleryFragment() {
         // Required empty public constructor
     }
@@ -101,6 +106,10 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
+//        bar.setVisibility(View.VISIBLE);
+
         this.onIPCameraListner = null;
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -112,26 +121,57 @@ public class GalleryFragment extends Fragment {
         alert = new androidx.appcompat.app.AlertDialog.Builder(selfActivity);
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+
             }
         });
-        alert.setNegativeButton("NO",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                });
+        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
 
         setIPCameraListner(new OnIPCameraListener() {
             @Override
             public void onIPCameraFind(String ip, int port) {
-                String msg = "Available IP Camera : "+ip+"  : Port"+String.valueOf(port);
-
                 selfActivity.runOnUiThread(new Runnable() {
                     public void run() {
+                        String msg = "Available IP Camera : "+ip+"  : Port"+String.valueOf(port);
+                        if(port == -1) msg = "Available IP Camera not found.";
                         Toast.makeText(selfActivity, msg, Toast.LENGTH_LONG).show();
                     }
                 });
+                // Determine whether to available ip address exits
+                if(ip.equals("")){
+                    // Go to Failure activity.
+                    Intent intent = new Intent(getActivity(), FailureActivity.class);
+                    getActivity().startActivity(intent);
+                }
+                else {
+                    // Go to Success activity.
+                    try {
+                        db= getActivity().openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
+                    }catch (Exception e) {
+                        Toast.makeText(getActivity(), "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
+                        db.close();
+                    }
+                    // Add device to DB
+                    ContentValues val = new ContentValues();
+
+                    val.put("device_name", getArguments().getString("device_name"));
+                    val.put("device_id", getArguments().getString("device_id"));
+                    val.put("ip_address", ip);
+                    val.put("port_number", String.valueOf(port));
+
+                    db.insert("Device", null, val);
+                    db.close();
+                    // Go
+                    Intent intent = new Intent(getActivity(), SuccessActivity.class);
+                    getActivity().startActivity(intent);
+                }
+                // Edited By BINGO
             }
         });
+
     }
 
     @Override
@@ -143,37 +183,27 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Here, Scan IP address to connect
-
                 deviceScan();
                 // Edited by BINGO
             }
         });
+        String str = "{\"name\": \"" + getArguments().getString("device_name")
+                + "\", \"id\": \"" + getArguments().getString("device_id")
+                + "\", \"ssid\": \""+ getArguments().getString("ssid")
+                +"\", \"pass\": \""+ getArguments().getString("password")
+                +"\"}";
 
+<<<<<<< HEAD
         String str = getArguments().getString("deviceinfo");
 
+=======
+>>>>>>> feature/history
         imageView = (ImageView) view.findViewById(R.id.imgQR);
         String charset = "UTF-8";
         Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 
         CreateQRCode(str, charset, hintMap,250, 250);
-
-//        List<QrSegment> segs = QrSegment.makeSegments(str);
-//        QrCode qr1 = QrCode.encodeSegments(segs, QrCode.Ecc.HIGH, 5, 40, 2, false);
-//
-//        bmp = Bitmap.createBitmap(qr1.size, qr1.size, Bitmap.Config.RGB_565);
-//        for (int y = 0; y < qr1.size; y++) {
-//            for (int x = 0; x < qr1.size; x++) {
-//                bmp.setPixel(x, y, qr1.getModule(x, y) ? Color.BLACK : Color.WHITE);
-//            }
-//
-//        }
-//
-//        try {
-//            imageView.setImageBitmap(encodeAsBitmap(str));
-//        } catch (WriterException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     private void deviceScan() {
@@ -208,7 +238,7 @@ public class GalleryFragment extends Fragment {
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
 
             //getting the logo
-            Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.logo_1);
+            Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.logo_2);
             //setting bitmap to image view
             imageView.setImageBitmap(mergeBitmaps(overlay, bitmap));
 
@@ -234,23 +264,7 @@ public class GalleryFragment extends Fragment {
 
         return combined;
     }
-//    Bitmap encodeAsBitmap(String str) throws WriterException {
-//        QRCodeWriter writer = new QRCodeWriter();
-//        BitMatrix bitMatrix = writer.encode(str, BarcodeFormat.QR_CODE, 250, 250);
-//
-//        int w = bitMatrix.getWidth();
-//        int h = bitMatrix.getHeight();
-//        int[] pixels = new int[w * h];
-//        for (int y = 0; y < h; y++) {
-//            for (int x = 0; x < w; x++) {
-//                pixels[y * w + x] = bitMatrix.get(x, y) ? BLACK : WHITE;
-//            }
-//        }
-//
-//        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-//        bitmap.setPixels(pixels, 0, w, 0, 0, w, h);
-//        return bitmap;
-//    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

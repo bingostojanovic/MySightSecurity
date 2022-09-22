@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.justin.mysightsecurity.CustomExpandableListAdapter;
 import com.justin.mysightsecurity.R;
 import com.justin.mysightsecurity.databinding.FragmentHistoryBinding;
@@ -37,7 +38,6 @@ public class HistoryFragment extends Fragment {
     ExpandableListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, HashMap<String, String>> expandableListDetail;
-
     SQLiteDatabase db;
 
     @SuppressLint("DefaultLocale")
@@ -48,6 +48,9 @@ public class HistoryFragment extends Fragment {
 
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+//        AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
+//        bar.setVisibility(View.VISIBLE);
 
         final TextView textView = binding.textDashboard;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
@@ -85,8 +88,7 @@ public class HistoryFragment extends Fragment {
             } while (c.moveToNext());
             expandableListView = (ExpandableListView) root.findViewById(R.id.expandableListView);
 
-            expandableListAdapter = new CustomExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail);
-
+            expandableListAdapter = new CustomExpandableListAdapter(getActivity(), HistoryFragment.this, expandableListTitle, expandableListDetail);
             expandableListView.setAdapter(expandableListAdapter);
 
             DisplayMetrics metrics = new DisplayMetrics();
@@ -96,40 +98,40 @@ public class HistoryFragment extends Fragment {
 
             expandableListView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
 
-            expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-                @Override
-                public void onGroupExpand(int groupPosition) {
-//                expandableListView.setGroupIndicator();
-
-                }
-            });
-
-            expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-                @Override
-                public void onGroupCollapse(int groupPosition) {
-
-                    Toast.makeText(getActivity(), String.format("%d", groupPosition), Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v,
-                                            int groupPosition, int childPosition, long id) {
-
-
-                    Toast.makeText(getActivity(), String.format("%d", groupPosition), Toast.LENGTH_SHORT).show();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("playinfo", str);
+//            expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 //
-//                    NavHostFragment.findNavController(HistoryFragment.this)
-//                            .navigate(R.id.action_history_to_playFragment, bundle);
-                    return true;
-                }
-            });
+//                @Override
+//                public void onGroupExpand(int groupPosition) {
+////                expandableListView.setGroupIndicator();
+//
+//                }
+//            });
+//
+//            expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//
+//                @Override
+//                public void onGroupCollapse(int groupPosition) {
+//
+//                    Toast.makeText(getActivity(), String.format("%d", groupPosition), Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });
+//
+//            expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//                @Override
+//                public boolean onChildClick(ExpandableListView parent, View v,
+//                                            int groupPosition, int childPosition, long id) {
+//
+//
+//                    Toast.makeText(getActivity(), String.format("bingo: %d", groupPosition), Toast.LENGTH_SHORT).show();
+////                    Bundle bundle = new Bundle();
+////                    bundle.putString("playinfo", str);
+////
+////                    NavHostFragment.findNavController(HistoryFragment.this)
+////                            .navigate(R.id.action_history_to_playFragment, bundle);
+//                    return true;
+//                }
+//            });
 
         }
         //Log.d("My Test", "Before close");
@@ -148,25 +150,7 @@ public class HistoryFragment extends Fragment {
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
-//    public int GetPixelFromDips(float pixels) {
-//        // Get the screen's density scale
-//        final float scale = getResources().getDisplayMetrics().density;
-//        // Convert the dps to pixels, based on density scale
-//        return (int) (pixels * scale + 0.5f);
-//    }
-//
-////    @Override
-////    public void onWindowFocusChanged(boolean hasFocus) {
-////        super.onWindowFocusChanged(hasFocus);
-////        DisplayMetrics metrics = new DisplayMetrics();
-////        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-////        int width = metrics.widthPixels;
-////        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-////            explvList.setIndicatorBounds(width-GetPixelFromDips(35), width-GetPixelFromDips(5));
-////        } else {
-////            explvList.setIndicatorBoundsRelative(width-GetPixelFromDips(35), width-GetPixelFromDips(5));
-////        }
-////    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -44,4 +44,5 @@ dependencies {
 
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
+
 }

@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.justin.mysightsecurity.GalleryFragment;
 import com.justin.mysightsecurity.PinSetupActivity;
 import com.justin.mysightsecurity.R;
@@ -45,6 +46,9 @@ public class AddDeviceFragment extends Fragment {
         binding = FragmentAdddeviceBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+//        AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
+//        bar.setVisibility(View.VISIBLE);
+
         final TextView textView = binding.textNotifications;
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -67,16 +71,25 @@ public class AddDeviceFragment extends Fragment {
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Your action here
-                        String str = "{\"name\": \"" + textDeviceName.getText().toString()
-                                + "\", \"id\": \"" + textDeviceId.getText().toString()
-                                + "\", \"ssid\": \""+textSSID.getText().toString()
-                                +"\", \"pass\": \""+textPassword.getText().toString()
-                                +"\"}";
-                        Bundle bundle = new Bundle();
-                        bundle.putString("deviceinfo", str);
+                        if(connectWifi(textSSID.getText().toString(), textPassword.getText().toString())) {
+                            Toast.makeText(getActivity(), "WI-FI connection success!", Toast.LENGTH_SHORT).show();
 
-                        NavHostFragment.findNavController(AddDeviceFragment.this)
-                                .navigate(R.id.action_add_device_to_galleryFragment, bundle);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("device_name", textDeviceName.getText().toString());
+                            bundle.putString("device_id", textDeviceId.getText().toString());
+                            bundle.putString("ssid", textSSID.getText().toString());
+                            bundle.putString("password", textPassword.getText().toString());
+
+                            NavHostFragment.findNavController(AddDeviceFragment.this)
+                                    .navigate(R.id.action_add_device_to_galleryFragment, bundle);
+                        } else {
+                            Toast.makeText(getActivity(), "WI-FI connection failed!", Toast.LENGTH_SHORT).show();
+
+                            textDeviceName.setText("");
+                            textDeviceId.setText("");
+                            textSSID.setText("");
+                            textPassword.setText("");
+                        }
                         // checking end
 
                     }
@@ -98,21 +111,21 @@ public class AddDeviceFragment extends Fragment {
 
         return root;
     }
-//
-//    public boolean connectWifi(String ssid, String password) {
-//        WifiConfiguration wifiConfig = new WifiConfiguration();
-//        wifiConfig.SSID = String.format("\"%s\"", ssid);
-//        wifiConfig.preSharedKey = String.format("\"%s\"", password);
-//        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
-//
-//        int netId =wifiManager.addNetwork(wifiConfig);
-//        wifiManager.disconnect();
-//        wifiManager.enableNetwork(netId, true);
-//
-//        boolean isConnectionSuccessful = wifiManager.reconnect();
-//
-//        return isConnectionSuccessful;
-//    }
+
+    public boolean connectWifi(String ssid, String password) {
+        WifiConfiguration wifiConfig = new WifiConfiguration();
+        wifiConfig.SSID = String.format("\"%s\"", ssid);
+        wifiConfig.preSharedKey = String.format("\"%s\"", password);
+        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
+
+        int netId =wifiManager.addNetwork(wifiConfig);
+        wifiManager.disconnect();
+        wifiManager.enableNetwork(netId, true);
+
+        boolean isConnectionSuccessful = wifiManager.reconnect();
+
+        return isConnectionSuccessful;
+    }
 
     @Override
     public void onDestroyView() {
