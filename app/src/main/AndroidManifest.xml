@@ -22,10 +22,9 @@
         android:theme="@style/Theme.MySightSecurity"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
             android:name=".SocketServerActivity"
             android:exported="false" />
-=======
+        <activit
             android:name=".FailureActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
@@ -37,7 +36,7 @@
             android:exported="false"
             android:label="@string/title_activity_success"
             android:theme="@style/Theme.MySightSecurity.Fullscreen" />
->>>>>>> feature/history
+
         <activity
             android:name=".PinSetupActivity"
             android:exported="false"

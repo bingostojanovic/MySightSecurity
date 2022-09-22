@@ -193,11 +193,6 @@ public class GalleryFragment extends Fragment {
                 +"\", \"pass\": \""+ getArguments().getString("password")
                 +"\"}";
 
-<<<<<<< HEAD
-        String str = getArguments().getString("deviceinfo");
-
-=======
->>>>>>> feature/history
         imageView = (ImageView) view.findViewById(R.id.imgQR);
         String charset = "UTF-8";
         Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
