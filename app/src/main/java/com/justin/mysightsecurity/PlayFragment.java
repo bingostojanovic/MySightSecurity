@@ -67,8 +67,8 @@ public class PlayFragment extends Fragment {
         //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
         bar.setVisibility(View.INVISIBLE);
-//        BottomNavigationView bottomNav = (BottomNavigationView) getActivity().findViewById(R.id.nav_view);
-//        bottomNav.setVisibility(View.INVISIBLE);
+        BottomNavigationView bottomNav = (BottomNavigationView) getActivity().findViewById(R.id.nav_view);
+        bottomNav.setVisibility(View.INVISIBLE);
 
     }
 
@@ -80,8 +80,8 @@ public class PlayFragment extends Fragment {
 //
 //        FragmentManager fm = getActivity().getFragmentManager();
 //        fm.popBackStackImmediate();
-//        BottomNavigationView bottomNav = (BottomNavigationView) getActivity().findViewById(R.id.nav_view);
-//        bottomNav.setVisibility(View.VISIBLE);
+        BottomNavigationView bottomNav = (BottomNavigationView) getActivity().findViewById(R.id.nav_view);
+        bottomNav.setVisibility(View.VISIBLE);
 
         //((MainActivity)getActivity()).dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
     }

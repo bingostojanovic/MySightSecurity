@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +65,15 @@ public class ScanFragment extends Fragment {
         adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("playinfo", String.format("%d", position));
+
+                NavController nav = NavHostFragment.findNavController(ScanFragment.this);
+                //nav.navigateUp();
+                nav.navigate(R.id.action_scan_to_playFragment, bundle);
+
             }
         });
         recyclerView.setAdapter(adapter);

@@ -1,9 +1,12 @@
 package com.justin.mysightsecurity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.justin.mysightsecurity.ui.add_device.AddDeviceFragment;
 
 public class PinInputActivity extends Activity {
 
@@ -23,6 +28,25 @@ public class PinInputActivity extends Activity {
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Are you really want to exit?");
+
+        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Your action here
+                PinInputActivity.this.finishAffinity();
+                // checking end
+            }
+        });
+
+        alert.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        return;
+                    }
+                });
+
+        alert.show();
     }
 
     @Override

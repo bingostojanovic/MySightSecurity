@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.justin.mysightsecurity.GalleryFragment;
 import com.justin.mysightsecurity.PinSetupActivity;
 import com.justin.mysightsecurity.R;
 import com.justin.mysightsecurity.SplashActivity;
+import com.justin.mysightsecurity.Utils;
 import com.justin.mysightsecurity.databinding.FragmentAdddeviceBinding;
 
 public class AddDeviceFragment extends Fragment {
@@ -46,17 +48,25 @@ public class AddDeviceFragment extends Fragment {
         binding = FragmentAdddeviceBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        AppBarLayout bar =(AppBarLayout) getActivity().findViewById(R.id.appbarLayout);
-//        bar.setVisibility(View.VISIBLE);
-
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         textDeviceName = (TextView) root.findViewById(R.id.text_device_name);
         textDeviceId = (TextView) root.findViewById(R.id.text_device_id);
         textSSID = (TextView) root.findViewById(R.id.text_ssid);
         textPassword = (TextView) root.findViewById(R.id.text_password);
+
         btnAddDevice = (Button) root.findViewById(R.id.btn_add_device);
+
+        // Here I will get WI-FI SSID
+        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = wifiManager.getConnectionInfo();
+        String ssid  = info.getSSID();
+        ssid = ssid.substring(1, ssid.length()-1);
+        textSSID.setText(ssid);
+        // END -Edited by BINGO
+//        Utils.getMACAddress("wlan0");
+//        Utils.getMACAddress("eth0");
+//        Utils.getIPAddress(true); // IPv4
+//        Utils.getIPAddress(false); // IPv6
 
         btnAddDevice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,27 +81,16 @@ public class AddDeviceFragment extends Fragment {
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Your action here
-                        if(connectWifi(textSSID.getText().toString(), textPassword.getText().toString())) {
-                            Toast.makeText(getActivity(), "WI-FI connection success!", Toast.LENGTH_SHORT).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("device_name", textDeviceName.getText().toString());
+                        bundle.putString("device_id", textDeviceId.getText().toString());
+                        bundle.putString("ssid", textSSID.getText().toString());
+                        bundle.putString("password", textPassword.getText().toString());
+                        bundle.putString("id_address", Utils.getIPAddress(true));
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString("device_name", textDeviceName.getText().toString());
-                            bundle.putString("device_id", textDeviceId.getText().toString());
-                            bundle.putString("ssid", textSSID.getText().toString());
-                            bundle.putString("password", textPassword.getText().toString());
-
-                            NavHostFragment.findNavController(AddDeviceFragment.this)
-                                    .navigate(R.id.action_add_device_to_galleryFragment, bundle);
-                        } else {
-                            Toast.makeText(getActivity(), "WI-FI connection failed!", Toast.LENGTH_SHORT).show();
-
-                            textDeviceName.setText("");
-                            textDeviceId.setText("");
-                            textSSID.setText("");
-                            textPassword.setText("");
-                        }
+                        NavHostFragment.findNavController(AddDeviceFragment.this)
+                                .navigate(R.id.action_add_device_to_galleryFragment, bundle);
                         // checking end
-
                     }
                 });
 
@@ -112,20 +111,20 @@ public class AddDeviceFragment extends Fragment {
         return root;
     }
 
-    public boolean connectWifi(String ssid, String password) {
-        WifiConfiguration wifiConfig = new WifiConfiguration();
-        wifiConfig.SSID = String.format("\"%s\"", ssid);
-        wifiConfig.preSharedKey = String.format("\"%s\"", password);
-        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
-
-        int netId =wifiManager.addNetwork(wifiConfig);
-        wifiManager.disconnect();
-        wifiManager.enableNetwork(netId, true);
-
-        boolean isConnectionSuccessful = wifiManager.reconnect();
-
-        return isConnectionSuccessful;
-    }
+//    public boolean connectWifi(String ssid, String password) {
+//        WifiConfiguration wifiConfig = new WifiConfiguration();
+//        wifiConfig.SSID = String.format("\"%s\"", ssid);
+//        wifiConfig.preSharedKey = String.format("\"%s\"", password);
+//        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
+//
+//        int netId =wifiManager.addNetwork(wifiConfig);
+//        wifiManager.disconnect();
+//        wifiManager.enableNetwork(netId, true);
+//
+//        boolean isConnectionSuccessful = wifiManager.reconnect();
+//
+//        return isConnectionSuccessful;
+//    }
 
     @Override
     public void onDestroyView() {

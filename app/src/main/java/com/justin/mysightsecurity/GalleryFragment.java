@@ -191,14 +191,19 @@ public class GalleryFragment extends Fragment {
                 + "\", \"id\": \"" + getArguments().getString("device_id")
                 + "\", \"ssid\": \""+ getArguments().getString("ssid")
                 +"\", \"pass\": \""+ getArguments().getString("password")
+                +"\", \"ip\": \""+ getArguments().getString("ip_address")
                 +"\"}";
-
+        //Toast.makeText(getActivity(), str,Toast.LENGTH_SHORT).show();
         imageView = (ImageView) view.findViewById(R.id.imgQR);
         String charset = "UTF-8";
         Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 
-        CreateQRCode(str, charset, hintMap,250, 250);
+        try {
+            CreateQRCode(str, charset, hintMap,250, 250);
+        }catch (Exception e) {
+            Toast.makeText(getActivity(), e.toString(),Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void deviceScan() {
@@ -233,7 +238,7 @@ public class GalleryFragment extends Fragment {
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
 
             //getting the logo
-            Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.logo_2);
+            Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.logo_1);
             //setting bitmap to image view
             imageView.setImageBitmap(mergeBitmaps(overlay, bitmap));
 
@@ -272,7 +277,7 @@ public class GalleryFragment extends Fragment {
     public void onStop() {
         super.onStop();
         try {
-            Global.serverSocket.close();
+            if(Global.serverSocket != null) Global.serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
