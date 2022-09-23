@@ -1,0 +1,44 @@
+[
+  {
+    "level_": 0,
+    "message_": "Start JSON generation. Platform version: 16 min SDK version: x86",
+    "file_": "E:\\Test\\CameraApp\\mjpeg-view\\src\\main\\jni\\Android.mk",
+    "tag_": "debug|x86",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 925930449
+  },
+  {
+    "level_": 0,
+    "message_": "JSON \u0027E:\\Test\\CameraApp\\mjpeg-view\\build\\.cxx\\Debug\\t154o5i1\\x86\\android_gradle_build.json\u0027 was up-to-date",
+    "file_": "E:\\Test\\CameraApp\\mjpeg-view\\src\\main\\jni\\Android.mk",
+    "tag_": "debug|x86",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -638370530
+  },
+  {
+    "level_": 0,
+    "message_": "JSON generation completed without problems",
+    "file_": "E:\\Test\\CameraApp\\mjpeg-view\\src\\main\\jni\\Android.mk",
+    "tag_": "debug|x86",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 893782332
+  }
+]

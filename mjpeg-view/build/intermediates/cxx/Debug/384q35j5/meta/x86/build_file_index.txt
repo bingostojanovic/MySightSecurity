@@ -1,0 +1,2 @@
+E:\Workstation\MySightSecurity\mjpeg-view\src\main\jni\Android.mk
+E:\Workstation\MySightSecurity\mjpeg-view\src\main\jni\Application.mk

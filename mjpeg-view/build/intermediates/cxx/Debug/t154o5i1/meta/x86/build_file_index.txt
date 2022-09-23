@@ -1,0 +1,2 @@
+E:\Test\CameraApp\mjpeg-view\src\main\jni\Android.mk
+E:\Test\CameraApp\mjpeg-view\src\main\jni\Application.mk

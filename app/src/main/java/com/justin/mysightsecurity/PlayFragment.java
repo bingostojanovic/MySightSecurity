@@ -2,6 +2,7 @@ package com.justin.mysightsecurity;
 
 import android.app.FragmentManager;
 import android.content.ClipData;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.github.niqdev.mjpeg.DisplayMode;
+import com.github.niqdev.mjpeg.Mjpeg;
+import com.github.niqdev.mjpeg.MjpegView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,6 +38,7 @@ public class PlayFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private SQLiteDatabase db;
 
     public PlayFragment() {
         // Required empty public constructor
@@ -90,7 +95,25 @@ public class PlayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_play, container, false);
         Toast.makeText(getActivity(), getArguments().getString("playinfo"), Toast.LENGTH_SHORT).show();
+
+
+
+        int TIMEOUT = 10; //seconds
+
+        MjpegView mjpegView = view.findViewById(R.id.mjpegView);
+
+
+        Mjpeg.newInstance()
+                .credential("admin", "password")
+                .open("http:/192.168.0.10:8080", TIMEOUT)
+                .subscribe(inputStream -> {
+                    mjpegView.setSource(inputStream);
+                    mjpegView.setDisplayMode(DisplayMode.BEST_FIT);
+                    mjpegView.showFps(true);
+                }) ;
+
 
         return inflater.inflate(R.layout.fragment_play, container, false);
     }

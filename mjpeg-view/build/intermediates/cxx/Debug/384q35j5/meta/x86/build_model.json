@@ -1,0 +1,145 @@
+{
+  "abi": "X86",
+  "info": {
+    "abi": "X86",
+    "bitness": 32,
+    "deprecated": false,
+    "default": true
+  },
+  "cxxBuildFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\.cxx\\Debug\\384q35j5\\x86",
+  "soFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\intermediates\\cxx\\Debug\\384q35j5\\obj\\local\\x86",
+  "soRepublishFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86",
+  "abiPlatformVersion": 16,
+  "variant": {
+    "buildSystemArgumentList": [],
+    "cFlagsList": [],
+    "cppFlagsList": [],
+    "variantName": "debug",
+    "isDebuggableEnabled": true,
+    "validAbiList": [
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
+    ],
+    "buildTargetSet": [],
+    "implicitBuildTargetSet": [],
+    "cmakeSettingsConfiguration": "android-gradle-plugin-predetermined-name",
+    "module": {
+      "cxxFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\.cxx",
+      "intermediatesBaseFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\intermediates",
+      "intermediatesFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\intermediates\\cxx",
+      "gradleModulePathName": ":mjpeg-view",
+      "moduleRootFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view",
+      "moduleBuildFile": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build.gradle",
+      "makeFile": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\src\\main\\jni\\Android.mk",
+      "buildSystem": "NDK_BUILD",
+      "ndkFolder": "C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529",
+      "ndkVersion": "21.4.7075529",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultStl": "SYSTEM",
+      "ndkMetaPlatforms": {
+        "min": 16,
+        "max": 30,
+        "aliases": {
+          "20": 19,
+          "25": 24,
+          "J": 16,
+          "J-MR1": 17,
+          "J-MR2": 18,
+          "K": 19,
+          "L": 21,
+          "L-MR1": 22,
+          "M": 23,
+          "N": 24,
+          "N-MR1": 24,
+          "O": 26,
+          "O-MR1": 27,
+          "P": 28,
+          "Q": 29,
+          "R": 30
+        }
+      },
+      "ndkMetaAbiList": [
+        {
+          "abi": "ARMEABI_V7A",
+          "bitness": 32,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "ARM64_V8A",
+          "bitness": 64,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "X86",
+          "bitness": 32,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "X86_64",
+          "bitness": 64,
+          "deprecated": false,
+          "default": true
+        }
+      ],
+      "cmakeToolchainFile": "C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529\\build\\cmake\\android.toolchain.cmake",
+      "stlSharedObjectMap": {
+        "LIBCXX_SHARED": {
+          "ARMEABI_V7A": "C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\arm-linux-androideabi\\libc++_shared.so",
+          "ARM64_V8A": "C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\libc++_shared.so",
+          "X86": "C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\i686-linux-android\\libc++_shared.so",
+          "X86_64": "C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk\\ndk\\21.4.7075529\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\x86_64-linux-android\\libc++_shared.so"
+        },
+        "LIBCXX_STATIC": {},
+        "NONE": {},
+        "SYSTEM": {}
+      },
+      "project": {
+        "rootBuildGradleFolder": "E:\\Workstation\\MySightSecurity",
+        "sdkFolder": "C:\\Users\\Administrator\\AppData\\Local\\Android\\Sdk",
+        "isBuildOnlyTargetAbiEnabled": true,
+        "isCmakeBuildCohabitationEnabled": false,
+        "isPrefabEnabled": false
+      },
+      "outputOptions": []
+    },
+    "prefabClassPaths": [],
+    "prefabPackages": [],
+    "prefabPackageConfigurations": [],
+    "stlType": "system",
+    "optimizationTag": "Debug"
+  },
+  "buildSettings": {
+    "environmentVariables": []
+  },
+  "prefabFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\.cxx\\Debug\\384q35j5\\prefab\\x86",
+  "isActiveAbi": true,
+  "fullConfigurationHash": "384q35j583xc66qa5z57342n1r4ca603r54o1g3t6hjo2e302l4i6u69",
+  "configurationArguments": [
+    "NDK_PROJECT_PATH\u003dnull",
+    "APP_BUILD_SCRIPT\u003dE:\\Workstation\\MySightSecurity\\mjpeg-view\\src\\main\\jni\\Android.mk",
+    "NDK_APPLICATION_MK\u003dE:\\Workstation\\MySightSecurity\\mjpeg-view\\src\\main\\jni\\Application.mk",
+    "APP_ABI\u003dx86",
+    "NDK_ALL_ABIS\u003dx86",
+    "NDK_DEBUG\u003d1",
+    "APP_PLATFORM\u003dandroid-16",
+    "NDK_OUT\u003dE:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\intermediates\\cxx\\Debug\\384q35j5/obj",
+    "NDK_LIBS_OUT\u003dE:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\intermediates\\cxx\\Debug\\384q35j5/lib"
+  ],
+  "intermediatesParentFolder": "E:\\Workstation\\MySightSecurity\\mjpeg-view\\build\\intermediates\\cxx\\Debug\\384q35j5"
+}

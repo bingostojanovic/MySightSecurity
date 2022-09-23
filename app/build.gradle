@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20"
+    }
+}
 plugins {
     id 'com.android.application'
 }
@@ -44,5 +54,7 @@ dependencies {
 
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
+
+    implementation project(path: ':mjpeg-view')
 
 }
