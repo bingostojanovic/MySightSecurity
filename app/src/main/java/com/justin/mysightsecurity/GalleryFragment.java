@@ -184,13 +184,6 @@ public class GalleryFragment extends Fragment {
 
         btnScan = (Button) view.findViewById(R.id.btn_scan);
 
-//        scanThread = new Thread(new Runnable() {
-//            public void run() {
-//                // a potentially time consuming task
-//                btnScan.setEnabled(Global.isConnected);
-//                if(!Global.isConnected) return;
-//            }
-//        });
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

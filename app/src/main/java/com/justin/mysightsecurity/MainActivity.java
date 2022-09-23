@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                         titleText.setText("Add New Device");
                         break;
                     case R.id.pin_setup:
+                        titleText.setText("Password Reset");
+
                         Intent intent = new Intent(MainActivity.this, PinSetupActivity.class);
                         MainActivity.this.startActivity(intent);
                         break;

@@ -76,17 +76,14 @@ class CommunicationThread implements Runnable {
 
                             db.insert("Device", null, val);
                             db.close();
+                            Intent intent = new Intent(Global.activity, SuccessActivity.class);
+                            Global.activity.startActivity(intent);
                         }catch (Exception e) {
                             Toast.makeText(Global.activity, "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
                         }
                         // Add device to DB
-                        //
-                        Intent intent = new Intent(Global.activity, SuccessActivity.class);
-                        Global.activity.startActivity(intent);
                     }
                 });
-
-                //Global.updateConversationHandler.post(new updateUIThread(read));
 
             } catch (IOException e) {
                 e.printStackTrace();
