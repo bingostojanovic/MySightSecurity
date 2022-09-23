@@ -28,6 +28,7 @@ public class Global {
     static public Activity activity = null;
     static public String newIP = "";
     static public String newPort = "";
+    static public Boolean isConnected = false;
 
     static public String getLocalIpAddress() {
         try {

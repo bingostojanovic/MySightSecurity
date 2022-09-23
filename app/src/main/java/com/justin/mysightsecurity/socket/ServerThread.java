@@ -14,7 +14,6 @@ public class ServerThread implements Runnable {
             e.printStackTrace();
         }
         while (!Thread.currentThread().isInterrupted()) {
-
             try {
 
                 socket = Global.serverSocket.accept();

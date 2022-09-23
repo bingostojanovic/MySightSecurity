@@ -77,6 +77,7 @@ public class GalleryFragment extends Fragment {
     private Button btnScan;
     public OnIPCameraListener onIPCameraListner;
     public SQLiteDatabase db;
+
     public GalleryFragment() {
         // Required empty public constructor
     }
@@ -118,72 +119,77 @@ public class GalleryFragment extends Fragment {
 
         selfActivity = getActivity();
         Global.activity = selfActivity;
-        alert = new androidx.appcompat.app.AlertDialog.Builder(selfActivity);
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-            }
-        });
-        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-            }
-        });
-
-        setIPCameraListner(new OnIPCameraListener() {
-            @Override
-            public void onIPCameraFind(String ip, int port) {
-                selfActivity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        String msg = "Available IP Camera : "+ip+"  : Port"+String.valueOf(port);
-                        if(port == -1) msg = "Available IP Camera not found.";
-                        Toast.makeText(selfActivity, msg, Toast.LENGTH_LONG).show();
-                    }
-                });
-                // Determine whether to available ip address exits
-                if(ip.equals("")){
-                    // Go to Failure activity.
-                    Intent intent = new Intent(getActivity(), FailureActivity.class);
-                    getActivity().startActivity(intent);
-                }
-                else {
-                    // Go to Success activity.
-                    try {
-                        db= getActivity().openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
-                    }catch (Exception e) {
-                        Toast.makeText(getActivity(), "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
-                        db.close();
-                    }
-                    // Add device to DB
-                    ContentValues val = new ContentValues();
-
-                    val.put("device_name", getArguments().getString("device_name"));
-                    val.put("device_id", getArguments().getString("device_id"));
-                    val.put("ip_address", ip);
-                    val.put("port_number", String.valueOf(port));
-
-                    db.insert("Device", null, val);
-                    db.close();
-                    // Go
-                    Intent intent = new Intent(getActivity(), SuccessActivity.class);
-                    getActivity().startActivity(intent);
-                }
-                // Edited By BINGO
-            }
-        });
+//        alert = new androidx.appcompat.app.AlertDialog.Builder(selfActivity);
+//        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
+//
+//            }
+//        });
+//        alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
+//
+//            }
+//        });
+//
+//        setIPCameraListner(new OnIPCameraListener() {
+//            @Override
+//            public void onIPCameraFind(String ip, int port) {
+//                selfActivity.runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        String msg = "Available IP Camera : "+ip+"  : Port"+String.valueOf(port);
+//                        if(port == -1) msg = "Available IP Camera not found.";
+//                        Toast.makeText(selfActivity, msg, Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//                // Determine whether to available ip address exits
+//                if(ip.equals("")){
+//                    // Go to Failure activity.
+//                    Intent intent = new Intent(getActivity(), FailureActivity.class);
+//                    getActivity().startActivity(intent);
+//                }
+//                else {
+//                    // Go to Success activity.
+//                    try {
+//                        db= getActivity().openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
+//                    }catch (Exception e) {
+//                        Toast.makeText(getActivity(), "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
+//                        db.close();
+//                    }
+//                    // Add device to DB
+//                    ContentValues val = new ContentValues();
+//
+//                    val.put("device_name", getArguments().getString("device_name"));
+//                    val.put("device_id", getArguments().getString("device_id"));
+//                    val.put("ip_address", ip);
+//                    val.put("port_number", String.valueOf(port));
+//
+//                    db.insert("Device", null, val);
+//                    db.close();
+//                    // Go
+//                    Intent intent = new Intent(getActivity(), SuccessActivity.class);
+//                    getActivity().startActivity(intent);
+//                }
+//                // Edited By BINGO
+//            }
+//        });
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Global.serverThread = new Thread(new ServerThread());
+        Global.serverThread.start();
+
         btnScan = (Button) view.findViewById(R.id.btn_scan);
 
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Here, Scan IP address to connect
-                deviceScan();
+                btnScan.setEnabled(false);
+//                scanThread.start();
                 // Edited by BINGO
             }
         });
@@ -206,10 +212,6 @@ public class GalleryFragment extends Fragment {
         }
     }
 
-    private void deviceScan() {
-        Global.serverThread = new Thread(new ServerThread());
-        Global.serverThread.start();
-    }
 
     public  void CreateQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
 

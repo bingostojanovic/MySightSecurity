@@ -40,6 +40,7 @@ public class ScanFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_scan, container, false);
+
         mCameraImagePaths = new ArrayList<>();
         mCameraImagePaths.add("Horse");
         mCameraImagePaths.add("Cow");
