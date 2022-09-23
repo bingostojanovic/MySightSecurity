@@ -1,6 +1,14 @@
 package com.justin.mysightsecurity.socket;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.widget.Button;
 import android.widget.Toast;
+
+import com.justin.mysightsecurity.R;
+import com.justin.mysightsecurity.SuccessActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +59,30 @@ class CommunicationThread implements Runnable {
                 Global.activity.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(Global.activity, "New IP Camera:"+Global.newIP+" Port:"+Global.newPort, Toast.LENGTH_LONG).show();
+
+                        Global.isConnected = true;
+                        Button btn = Global.activity.findViewById(R.id.btn_scan);
+                        btn.setEnabled(true);
+                        //ui, db update
+                        SQLiteDatabase db;
+                        try {
+                            db= Global.activity.openOrCreateDatabase("sight.db", Context.MODE_PRIVATE,null);
+                            ContentValues val = new ContentValues();
+
+//                        val.put("device_name", getArguments().getString("device_name"));
+//                        val.put("device_id", getArguments().getString("device_id"));
+                            val.put("ip_address", Global.newIP);
+                            val.put("port_number", String.valueOf(Global.newPort));
+
+                            db.insert("Device", null, val);
+                            db.close();
+                        }catch (Exception e) {
+                            Toast.makeText(Global.activity, "Can not access database: "+ e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        // Add device to DB
+                        //
+                        Intent intent = new Intent(Global.activity, SuccessActivity.class);
+                        Global.activity.startActivity(intent);
                     }
                 });
 

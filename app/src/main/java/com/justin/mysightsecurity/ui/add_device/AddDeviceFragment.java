@@ -67,6 +67,7 @@ public class AddDeviceFragment extends Fragment {
 //        Utils.getMACAddress("eth0");
 //        Utils.getIPAddress(true); // IPv4
 //        Utils.getIPAddress(false); // IPv6
+        textDeviceName.setText(Utils.getIPAddress(true));
 
         btnAddDevice.setOnClickListener(new View.OnClickListener() {
             @Override

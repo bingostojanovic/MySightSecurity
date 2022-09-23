@@ -21,7 +21,7 @@ public class SocketServerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_socket_server);
 
-        String jsonStr = "{\"ip\":\"192.168.2.30\", \"port\":\"554\"}";
+        String jsonStr = "{\"ip\":\"192.168.2.30\", \"port\":\"8080\"}";
         String ip="", port="";
         JSONObject obj = null;
         try {
@@ -41,7 +41,7 @@ public class SocketServerActivity extends Activity {
             }
         });
 
-        Global.text = (TextView) findViewById(R.id.text2);
+        Global.text = (TextView) findViewById(R.id.text_socket);
         Global.text.setText("Starting...at" + port +" -- " + ip );
 
         Global.updateConversationHandler = new Handler();
