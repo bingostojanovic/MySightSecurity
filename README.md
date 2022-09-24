@@ -1,6 +1,6 @@
 # MySightSecurity
 
-This project is work with ip-camera to live stream from camera using Mjpeg-view libraryl.
+This project is work with ip-camera to live stream from camera using Mjpeg-view library.
 
 <h1>Features</h1>
 <h5>- live video streaming from camera</h5>
